@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){console.log("ShowBlade@append_subcomment - Content finished loading"),console.log("ShowBlade@append_subcomment - Process of appending all subcomments")});
