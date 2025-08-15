@@ -30,47 +30,49 @@
         <div>
             <div class="grid grid-cols-2 gap-7 mt-5">
                 @foreach ($latestPosts as $post)
-                    <div class="cursor-pointer shadow-md h-full rounded-3xl p-5 mb-2 transition ease-in-out hover:scale-102">
-                        <div class="bg-cover bg-center h-[200px] rounded-2xl mb-2" style="background-image: url('{{ $post->media->first()?->url }}')"></div>
-
-                           <div class="my-2 mr-3 text-xs flex flex-wrap gap-1">
-                                @foreach ($post->categories as $category)
-                                    <span class="px-2 py-1 rounded-full text-white
-                                        @switch($category->category_name)
-                                            @case('Budgeting & Savings') bg-green-600 @break
-                                            @case('Investing') bg-blue-600 @break
-                                            @case('Debt & Credit') bg-red-600 @break
-                                            @case('Financial Planning') bg-purple-600 @break
-                                            @case('Career & Income') bg-yellow-500 text-black @break
-                                            @default bg-gray-500 @break
-                                        @endswitch
-                                    ">
-                                        {{ $category->category_name }}
-                                    </span>
-                                @endforeach
+                <div class="cursor-pointer shadow-md h-full rounded-3xl p-5 mb-2 transition ease-in-out hover:scale-102">
+                        <a href="{{ route('posts.show', $post->id) }}">
+                            <div class="bg-cover bg-center h-[200px] rounded-2xl mb-2" style="background-image: url('{{ $post->media->first()?->url }}')"></div>
+    
+                               <div class="my-2 mr-3 text-xs flex flex-wrap gap-1">
+                                    @foreach ($post->categories as $category)
+                                        <span class="px-2 py-1 rounded-full text-white
+                                            @switch($category->category_name)
+                                                @case('Budgeting & Savings') bg-green-600 @break
+                                                @case('Investing') bg-blue-600 @break
+                                                @case('Debt & Credit') bg-red-600 @break
+                                                @case('Financial Planning') bg-purple-600 @break
+                                                @case('Career & Income') bg-yellow-500 text-black @break
+                                                @default bg-gray-500 @break
+                                            @endswitch
+                                        ">
+                                            {{ $category->category_name }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                                                
+                            <div class="text-2xl font-semibold">{{$post->title}}</div>
+                            <div class="flex gap-3 text-gray-600 my-2 text-xs">
+                                <span class="flex items-center"><x-css-profile class="h-4"/>{{ $post->users->name}}</span>
+                                <span class="flex gap-1 items-center">
+                                    <svg class="h-3 w-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    {{ date('M d, Y', strtotime($post->publication_date)) }}
+                                </span>   
+                                <span class="flex gap-1 items-center">
+                                    <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    {{ $post->views_count }}
+                                </span>                    
+                            </div>                    
+                            <div class="text-black mb-4">{{Str::limit($post->content,150)}}</div>
+                            <div class="w-full mt-10 mb-2">
+                                <a class="text-white bg-green-700 py-3 px-5 rounded-xl cursor-pointer transition ease-in-out hover:bg-green-900" href="{{ route('posts.show', $post->id) }}">Read more</a>
                             </div>
-                                            
-                        <div class="text-2xl font-semibold">{{$post->title}}</div>
-                        <div class="flex gap-3 text-gray-600 my-2 text-xs">
-                            <span class="flex items-center"><x-css-profile class="h-4"/>{{ $post->users->name}}</span>
-                            <span class="flex gap-1 items-center">
-                                <svg class="h-3 w-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                {{ date('M d, Y', strtotime($post->publication_date)) }}
-                            </span>   
-                            <span class="flex gap-1 items-center">
-                                <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                {{ $post->views_count }}
-                            </span>                    
-                        </div>                    
-                        <div class="text-black mb-4">{{Str::limit($post->content,150)}}</div>
-                        <div class="w-full mt-10 mb-2">
-                            <a class="text-white bg-green-700 py-3 px-5 rounded-xl cursor-pointer transition ease-in-out hover:bg-green-900" href="{{ route('posts.show', $post->id) }}">Read more</a>
-                        </div>
+                        </a>
                     </div>
                 @endforeach
             </div>
