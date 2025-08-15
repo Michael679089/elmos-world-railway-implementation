@@ -17,7 +17,7 @@
             @vite(['resources/css/app.css', 'resources/js/app.js']) 
         @else 
             @php
-                echo "The Vite is not working"
+                echo <p>Vite is not working I think</p>
             @endphp
         @endif
     </head>
