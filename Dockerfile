@@ -37,9 +37,6 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 # INSTALL LARAVEL DEPENDENCIES
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# CREATE .env IF MISSING
-RUN if [ ! -f .env ]; then cp .env.example .env; fi
-
 # INSTALL FRONTEND DEPENDENCIES & BUILD
 RUN npm install && npm run build
 
