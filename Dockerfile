@@ -45,7 +45,7 @@ RUN npm install && npm run build
 
 # I want to echo what the directory looks like - recursive
 RUN echo "Showing the directory"
-RUN ls -R
+RUN ls
 
 # START APACHE
 CMD ["apache2-foreground"]
