@@ -15,12 +15,4 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks: undefined,
-            },
-        },
-    },
-    base: process.env.APP_URL ? new URL('/build/', process.env.APP_URL).href : '/',
 });
