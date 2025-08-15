@@ -27,8 +27,6 @@ RUN a2enmod rewrite
 
 # Set global ServerName to suppress warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-## Supress the warnings such as apache2 -D FOREGROUND warning as it doens't affect the experience.
-RUN echo "LogLevel warn" >> /etc/apache2/apache2.conf
 
 
 # PORT
@@ -51,7 +49,7 @@ RUN echo "Showing the directory"
 RUN ls
 
 ## I want to check the directory specifically for public
-RUN cd public && ls
+RUN cd public && ls -R
 
 
 # START APACHE
