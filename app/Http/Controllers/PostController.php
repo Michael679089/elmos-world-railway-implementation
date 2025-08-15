@@ -344,7 +344,7 @@ class PostController extends Controller
 
                 if ($new_image_url_link) {
                     $new_image_url_link->update([
-                        'url'         => $validated_request_items['post_image'] ?? $media->url,
+                        'url'         => $validated_request_items['post_image'] ?? null,
                         'file_name'   => fake()->title(),
                         'file_type'   => '.jpg',
                         'upload_date' => now(),

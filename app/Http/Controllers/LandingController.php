@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LandingController extends Controller
 {
@@ -37,13 +37,23 @@ class LandingController extends Controller
             return Category::all();
         });
 
+        $is_user_logged_in = false;
+
+        if (Auth::id()) {
+            $is_user_logged_in = true;
+        }
+
+
         return view(
             'landing',
             [
                 'featuredPosts' => $featuredPosts,
                 'latestPosts' => $latestPosts,
                 'popularPosts' => $popularPosts,
-                'categories' => $categories
+                'categories' => $categories,
+
+                // So I can check in landing page if user is logged in using Javascript
+                'is_user_logged_in' => $is_user_logged_in,
             ]
         );
     }

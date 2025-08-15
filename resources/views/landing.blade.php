@@ -30,7 +30,7 @@
         <div>
             <div class="grid grid-cols-2 gap-7 mt-5">
                 @foreach ($latestPosts as $post)
-                <div class="cursor-pointer shadow-md h-full rounded-3xl p-5 mb-2 transition ease-in-out hover:scale-102">
+                <div class="linkToPost | cursor-pointer shadow-md h-full rounded-3xl p-5 mb-2 transition ease-in-out hover:scale-102">
                         <a href="{{ route('posts.show', $post->id) }}">
                             <div class="bg-cover bg-center h-[200px] rounded-2xl mb-2" style="background-image: url('{{ $post->media->first()?->url }}')"></div>
     
@@ -73,8 +73,10 @@
                                 <a class="text-white bg-green-700 py-3 px-5 rounded-xl cursor-pointer transition ease-in-out hover:bg-green-900" href="{{ route('posts.show', $post->id) }}">Read more</a>
                             </div>
                         </a>
+                        
                     </div>
                 @endforeach
+                
             </div>
             <div class="mt-8">
                 {{ $latestPosts->links() }}
@@ -86,18 +88,61 @@
         <div class="grid grid-cols-1 gap-2 mt-5">
 
             @foreach ($popularPosts as $post)
-                <a class="relative bg-cover bg-center h-[200px] rounded-2xl mb-2 p-5 cursor-pointer text-white flex flex-col-reverse transition ease-in-out hover:scale-102" style="background-image: url('{{ $post->media->first()?->url }}')" href="{{ route('posts.show', $post->id) }}">
+                <a class="linkToPost | relative bg-cover bg-center h-[200px] rounded-2xl mb-2 p-5 cursor-pointer text-white flex flex-col-reverse transition ease-in-out hover:scale-102" style="background-image: url('{{ $post->media->first()?->url }}')" href="{{ route('posts.show', $post->id) }}">
                     @foreach ($post->categories as $category)
                         <div class="text-md z-1">{{$category->category_name}}</div>
                     @endforeach
                     <div class="text-2xl mb-1 z-1">{{$post->title}}</div>
                     <div class="rounded-2xl absolute  inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
                 </a>
-                
             @endforeach
  
         </div>
     </div>
+
+    {{-- Inline Script For Popping Out Pop Up --}}
+
+    <script>
+        // Step 1: Create the div popup
+        const popupOverlay = document.createElement('div');
+        popupOverlay.id = 'loginPopup';
+        popupOverlay.className = 'fixed inset-0 flex items-center justify-center bg-black/50 hidden z-50';
+
+        const popupContent = document.createElement('div');
+        popupContent.className = 'bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center border border-2 border-green-700';
+
+        popupContent.innerHTML = `
+            <h2 class="text-xl font-bold mb-4">Please Log In</h2>
+            <p class="mb-4">You need to be logged in to view this post.</p>
+            <p class="mb-4 text-center">Redirecting user to the Login Page...</p>
+            <div class="flex justify-center">
+                <div class="w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        `;
+
+        popupOverlay.appendChild(popupContent);
+        document.body.appendChild(popupOverlay);
+        
+        // Step 2: Get all elements with the class 'linkToPost' + Loop through and attach click event
+        var elements = document.getElementsByClassName('linkToPost');
+        const isUserLoggedIn = @json($is_user_logged_in);
+
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].addEventListener('click', function(event) {
+                if (!isUserLoggedIn) {
+                    event.preventDefault();
+                    popupOverlay.classList.remove('hidden');
+
+                    // Optional: redirect after a delay
+                    setTimeout(() => {
+                        window.location.href = "{{ route('login') }}";
+                    }, 2000);
+                }
+            });
+        }
+    </script>
+
+
 </div>
 
 @endsection
