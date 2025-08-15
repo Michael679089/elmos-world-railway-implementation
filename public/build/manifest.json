@@ -1,23 +1,23 @@
 {
   "resources/css/app.css": {
-    "file": "public/build/assets/app-DZQFWejb.css",
+    "file": "assets/app-DZQFWejb.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "public/build/assets/app-DNxiirP_.js",
+    "file": "assets/app-DNxiirP_.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/js/append_subcomment.js": {
-    "file": "public/build/assets/append_subcomment-xWAYBHNs.js",
+    "file": "assets/append_subcomment-xWAYBHNs.js",
     "name": "append_subcomment",
     "src": "resources/js/append_subcomment.js",
     "isEntry": true
   },
   "resources/js/michael_edit_comment.js": {
-    "file": "public/build/assets/michael_edit_comment-DdqvnqFR.js",
+    "file": "assets/michael_edit_comment-DdqvnqFR.js",
     "name": "michael_edit_comment",
     "src": "resources/js/michael_edit_comment.js",
     "isEntry": true
