@@ -42,6 +42,11 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 RUN composer update 
 
+
+# Install Vite:
+RUN npm install vite @vitejs/plugin-vue # or @vitejs/plugin-react if using React
+RUN npm install laravel-vite-plugin --save-dev
+
 # INSTALL FRONTEND DEPENDENCIES & BUILD
 RUN npm install && npm run build
 
@@ -52,8 +57,7 @@ RUN ls
 ## I want to check the directory specifically for public
 RUN cd public && ls -R && cd .. && cd resources && ls -R
 
-
-# Check if vite exists
+# Check if vite exists - I GOT AN ERROR HERE WHICH MEANS VITE ISN'T INSTALLED IN MY CONTAINER
 RUN npm ls vite
 RUN vite --version
 
