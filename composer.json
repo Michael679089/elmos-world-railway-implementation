@@ -41,6 +41,9 @@
         }
     },
     "scripts": {
+        "_comment": [
+            "Supposed to be for post-create-project-cmd but I don't need sqlite: php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\""
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
@@ -53,7 +56,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
         "dev": [
