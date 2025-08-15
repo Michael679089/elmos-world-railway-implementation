@@ -37,6 +37,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-d
 # CREATE .env IF MISSING
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
+# For making a build
 RUN npm run build
 
 # START APACHE
