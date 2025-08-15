@@ -53,5 +53,10 @@ RUN ls
 RUN cd public && ls -R && cd .. && cd resources && ls -R
 
 
+# Check if vite exists
+RUN npm ls vite
+RUN vite --version
+
+
 # START APACHE
 CMD ["apache2-foreground"]

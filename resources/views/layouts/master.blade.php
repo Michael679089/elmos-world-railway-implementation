@@ -16,12 +16,12 @@
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'))) 
             @vite(['resources/css/app.css', 'resources/js/app.js']) 
         @else 
-            @php
-                echo <p>Vite is not working I think</p>
-            @endphp
         @endif
     </head>
     <body class="bg-yellow-10">
+        @if ((file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'))) == false) 
+            <p> Vite Doesn't Exist </p>
+        @endif
         
         {{-- Adjust background color to match design --}}
         @include('components.header')
