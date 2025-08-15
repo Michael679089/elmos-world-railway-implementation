@@ -55,6 +55,8 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-d
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
 # Start NPM RUN BUILD
+RUN apt install nodejs npm
+RUN node -v && npm -v
 RUN npm install && npm run build
 
   
