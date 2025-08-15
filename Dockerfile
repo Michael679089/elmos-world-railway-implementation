@@ -16,8 +16,13 @@ COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 
+# Start NPM RUN BUILD - so that it can be included to copying files to /var/www/html
+RUN apt-get update && apt-get install -y nodejs npm
+RUN node -v && npm -v
+RUN npm install && npm run build
 
-# PROJECT FILES
+
+# PROJECT FILES - copying files to /var/www/html
 COPY . /var/www/html
 
 
@@ -54,10 +59,7 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-d
 # CREATE .env IF MISSING
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
-# Start NPM RUN BUILD
-RUN apt-get update && apt-get install -y nodejs npm
-RUN node -v && npm -v
-RUN npm install && npm run build
+
 
   
 
