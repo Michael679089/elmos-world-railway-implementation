@@ -44,8 +44,6 @@ RUN npm install && npm run build
 RUN echo "Showing the directory"
 RUN ls
 
-# Run Artisan
-RUN php artisan serve
 
 # START APACHE
 CMD ["apache2-foreground"]
