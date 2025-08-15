@@ -2,7 +2,7 @@
 FROM php:8.2-apache
 
 # DEPENDENCIES
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \ 
     git unzip libzip-dev libpng-dev libonig-dev libxml2-dev zip curl \
     nodejs npm \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd \
@@ -42,6 +42,9 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
 # INSTALL FRONTEND DEPENDENCIES & BUILD
 RUN npm install && npm run build
+
+# I want to echo what the directory looks like - recursive
+RUN tree
 
 # START APACHE
 CMD ["apache2-foreground"]
