@@ -40,6 +40,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 
 # INSTALL LARAVEL DEPENDENCIES
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+RUN composer update 
 
 # INSTALL FRONTEND DEPENDENCIES & BUILD
 RUN npm install && npm run build
@@ -49,7 +50,7 @@ RUN echo "Showing the directory"
 RUN ls
 
 ## I want to check the directory specifically for public
-RUN cd public && ls -R
+RUN cd public && ls -R && cd .. && cd resources && ls -R
 
 
 # START APACHE
