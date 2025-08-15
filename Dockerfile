@@ -25,6 +25,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # APACHE CONFIG
 RUN a2enmod rewrite
 
+# Set global ServerName to suppress warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # PORT
 EXPOSE 80
 
