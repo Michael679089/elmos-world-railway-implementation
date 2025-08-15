@@ -22,5 +22,5 @@ export default defineConfig({
             },
         },
     },
-    base: process.env.NODE_ENV === 'production' ? '/build/' : '/',
+    base: process.env.APP_URL ? new URL('/build/', process.env.APP_URL).href : '/',
 });

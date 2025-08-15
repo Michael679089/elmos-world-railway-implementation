@@ -13,9 +13,11 @@
             rel="stylesheet"
         />
         <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) ||
-        file_exists(public_path('hot'))) @vite(['resources/css/app.css',
-        'resources/js/app.js']) @else @endif
+        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot'))) 
+            @vite(['resources/css/app.css','resources/js/app.js']) 
+        @else 
+        
+        @endif
     </head>
     <body class="bg-yellow-10">
         
