@@ -55,8 +55,3 @@ RUN cd public && ls -R && cd .. && cd resources && ls -R
 
 # START APACHE
 CMD ["apache2-foreground"]
-
-
-
-# INSTALL FRONTEND DEPENDENCIES & BUILD
-RUN npm install && npm run build
