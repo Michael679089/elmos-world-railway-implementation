@@ -1,41 +1,45 @@
-# IMAGE
-FROM php:8.2-apache
+# ---------------------
+# 1. Base image for PHP
+# ---------------------
+FROM php:8.2-fpm
 
-# DEPENDENCIES
+# Install required PHP extensions
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libpng-dev libonig-dev libxml2-dev zip curl \
-    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd
+    git curl zip unzip libpng-dev libonig-dev libxml2-dev libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# COMPOSER
+# Install Composer
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 
-# WORKING DIRECTORY
+# Set working directory
 WORKDIR /var/www/html
 
-# PROJECT FILES
-COPY . /var/www/html
+# ---------------------
+# 2. Install Node for Vite
+# ---------------------
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
-# PERMISSIONS
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# ---------------------
+# 3. Copy project files
+# ---------------------
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
 
-# APACHE CONFIG
-RUN a2enmod rewrite
+COPY package.json package-lock.json ./
+RUN npm ci && npm run build
 
-# PORT
-EXPOSE 80
+COPY . .
 
-# ENVIRONMENT
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# ---------------------
+# 4. Permissions & Laravel setup
+# ---------------------
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# CONFIGURE APACHE ROOT
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+# ---------------------
+# 5. Production optimizations
+# ---------------------
+RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-# LARAVEL DEPENDENCIES
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
-
-# CREATE .env IF MISSING
-RUN if [ ! -f .env ]; then cp .env.example .env; fi
-
-# START APACHE
-CMD ["apache2-foreground"]
+EXPOSE 9000
+CMD ["php-fpm"]
