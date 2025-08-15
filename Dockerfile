@@ -44,9 +44,8 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 RUN npm install && npm run build
 
 # I want to echo what the directory looks like - recursive
-RUN echo "Going to install tree"
-RUN apt-get update && apt-get install -y tree && tree
-
+RUN echo "Showing the directory"
+RUN ls -R
 
 # START APACHE
 CMD ["apache2-foreground"]
