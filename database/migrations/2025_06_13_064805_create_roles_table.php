@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id('id');
             $table->string('role_name')->max(1)->comment('A - Admin, C - Contributor, S - Subscriber');
-            $table->string('description');
+            $table->text('description');
         });
     }
 

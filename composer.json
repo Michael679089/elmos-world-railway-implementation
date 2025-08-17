@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "michael/elmos-world-railway",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
@@ -8,13 +8,13 @@
     "require": {
         "php": "^8.2",
         "andreiio/blade-remix-icon": "^3.6",
-        "blade-ui-kit/blade-heroicons": "^1.4",
-        "blade-ui-kit/blade-icons": "^1.8",
+        "blade-ui-kit/blade-heroicons": "^2.6",
+        "blade-ui-kit/blade-icons": "^1.6",
         "blade-ui-kit/blade-zondicons": "^1.6",
         "hasnayeen/blade-eva-icons": "^2.1",
         "khatabwedaa/blade-css-icons": "^1.5",
         "laravel/framework": "^12.0",
-        "laravel/telescope": "^5.9",
+        "laravel/telescope": "^5.11",
         "laravel/tinker": "^2.10.1",
         "mansoor/blade-lets-icons": "^1.0",
         "secondnetwork/blade-tabler-icons": "^3.34"

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('name', 30);
             $table->string('remember_token', 100)->nullable();
+            $table->string('profile_photo_image_link')->default(""); // default to blank string
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp('created_at')->useCurrent()->useCurrentOnUpdate();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('registration_date')->useCurrent()->nullable(); // use current defaults to the current time.
             $table->timestamp('last_login_date')->nullable();

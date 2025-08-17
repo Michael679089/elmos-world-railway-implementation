@@ -132,9 +132,6 @@ class PostController extends Controller
             $is_post_successful = $post->save();
 
             if ($is_post_successful) {
-
-                Log::info("Post.store - Post successfully published and saved to DB");
-
                 // Step 5: After post save -> SYNC the categories and tags of the created post if user added tags and categories.
                 if ($has_any_categories_flag) {
                     $post_categories_pivot_table = $post->categories();
@@ -156,13 +153,15 @@ class PostController extends Controller
                 }
 
                 $media = new Media([
-                    'url'         => $validated_request_items['post_image'] ?? null,
+                    'url'         => $validated_request_items['post_image'] ?? "",
                     'file_name'   => fake()->title(),
                     'file_type'   => '.jpg',
                     'upload_date' => now(),
                     'description' => fake()->paragraph(),
                     'post_id'     => $post->id,
                 ]);
+
+                Log::info("Post.store - Post successfully published and saved to DB");
 
                 $media->save();
             } else {

@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 "resources/css/app.css", 
                 'resources/js/app.js',
+                'resources/css/dashboard-styles.css',
                 'resources/js/michael_edit_comment.js',
                 'resources/js/append_subcomment.js',
             ],

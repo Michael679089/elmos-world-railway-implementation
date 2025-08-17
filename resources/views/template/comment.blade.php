@@ -4,7 +4,6 @@
     - $current_comment
 --}}
 
-
 <div class="my-10">
     <div class="flex items-center justify-between w-full mb-2">
         <img src="https://i.pravatar.cc/40?u={{ $current_comment->user_id }}"
@@ -50,7 +49,7 @@
     </div>
     <div class="w-full flex items-center gap-3">
         <button onclick="toggleReplyForm({{ $current_comment->id }})" class="text-blue-500 text-sm flex gap-1 my-2 cursor-pointer">
-            <x-heroicon-o-arrow-uturn-left class="h-4"/>
+            <x-heroicon-o-arrow-uturn-left class="w-6 h-6 text-gray-500" />
             Reply
         </button>
 

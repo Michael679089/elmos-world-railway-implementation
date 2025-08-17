@@ -25,12 +25,17 @@ class DashboardController extends Controller
         try {
             // Get dashboard statistics
 
+
             $stats = [];
 
             $recentUsers = collect();
             $recentPosts = collect();
 
-            if (auth()->user()->roles->contains('id', 1)) {
+            $user = Auth::user();
+
+            if ($user->roles->contains('id', 1)) {
+                Log::info("Dashboard.index - Checking ID 1");
+
 
                 $stats = [
                     'total_posts' => Post::count(),
@@ -57,12 +62,12 @@ class DashboardController extends Controller
 
                 // Get recent users with roles
                 $recentUsers = User::with(['roles:id,role_name'])
-                    ->select('id', 'name', 'email', 'profile_photo', 'registration_date', 'updated_at')
+                    ->select('id', 'name', 'email', 'profile_photo_image_link', 'registration_date', 'updated_at')
                     ->orderBy('created_at', 'desc')
                     ->limit(5)
                     ->get();
             } else {
-                $contributor = Post::where('user_id', auth()->id());
+                $contributor = Post::where('user_id', Auth::id());
                 $stats = [
                     'total_posts' => (clone $contributor)->count(),
                     'published_posts' => (clone $contributor)->where('status', 'P')->count(),
@@ -84,7 +89,7 @@ class DashboardController extends Controller
 
             return view('dashboard.index', compact('stats', 'recentPosts', 'recentUsers'));
         } catch (\Exception $e) {
-            Log::error('Dashboard index error: ' . $e->getMessage());
+            Log::error('Dashboard.index error: ' . $e->getMessage());
 
             // Provide default stats in case of error
             $stats = [
@@ -111,6 +116,9 @@ class DashboardController extends Controller
     public function posts(Request $request): View
     {
         try {
+
+            $user = Auth::user();
+
             $query = Post::with(['users:id,name', 'categories:id,category_name'], 'publication_date');
 
             // Apply search filter - only search in title
@@ -130,15 +138,15 @@ class DashboardController extends Controller
             $sortBy = $request->get('sort', 'created_at');
             $sortOrder = $request->get('order', 'desc');
 
-            if (auth()->user()->roles->contains('id', 1)) {
+            if ($user->roles->contains('id', 1)) {
                 $query->orderBy($sortBy, $sortOrder);
 
                 $posts = $query->paginate(10)->withQueryString();
             };
 
-            if (auth()->user()->roles->contains('id', 2)) {
+            if ($user->roles->contains('id', 2)) {
                 $query->orderBy($sortBy, $sortOrder)
-                    ->where('user_id', auth()->id())
+                    ->where('user_id', Auth::id())
                     ->firstOrFail();
 
                 $posts = $query->paginate(10)->withQueryString();

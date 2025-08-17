@@ -16,11 +16,14 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('slug')->comment("better name in the address bar");
+            // Optional parts of the posts
             $table->timestamp('publication_date')->nullable();
             $table->timestamp('last_modified_date')->nullable();
             $table->string('status')->max(1)->comment('D - Draft, P - Published, I - Inactive)');
-            $table->text('featured_image_url');
+            $table->text('featured_image_url')->nullable();
             $table->integer('views_count')->default(0)->comment("the number of times the post has been viewed.");
+            // Timestamps (created_at & updated_at)
+            $table->timestamps();
         });
     }
 

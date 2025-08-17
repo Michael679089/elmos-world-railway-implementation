@@ -1,7 +1,12 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DZQFWejb.css",
+    "file": "assets/app-Bx2qyeQP.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/dashboard-styles.css": {
+    "file": "assets/dashboard-styles-ON5rbgah.css",
+    "src": "resources/css/dashboard-styles.css",
     "isEntry": true
   },
   "resources/js/app.js": {
